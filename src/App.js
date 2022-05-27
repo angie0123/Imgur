@@ -8,7 +8,8 @@ import {
   signOut,
 } from 'firebase/auth';
 import { useState } from 'react';
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
 const firebaseConfig = {
   apiKey: 'AIzaSyC9IYgw2O6Uyj_B_beQCloRf8NgZmc0hss',
   authDomain: 'imgur-75071.firebaseapp.com',
@@ -20,22 +21,20 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig);
 
-const createPost = async () => {
-  const db = getFirestore();
-  const docRef = await addDoc(collection(db, 'posts'), {
-    title: 'Testing Title',
-    description: 'Testing Description',
-  });
-  console.log('Written document with ID', docRef.id);
-};
-
-createPost();
-
 function App() {
   const [isUserSignedIn, setIsUserSignedIn] = useState(false);
   const signIn = async () => {
     var provider = new GoogleAuthProvider();
     await signInWithPopup(getAuth(), provider);
+  };
+
+  const createPost = async () => {
+    const db = getFirestore();
+    const docRef = await addDoc(collection(db, 'posts'), {
+      title: 'Testing Title',
+      description: 'Testing Description',
+    });
+    console.log('Written document with ID', docRef.id);
   };
 
   const signOutUser = () => {
@@ -51,18 +50,23 @@ function App() {
   initFirebaseAuth();
 
   return (
-    <>
-      <div>Create post</div>
-      {isUserSignedIn ? (
-        <div className="sign-out" onClick={signOutUser}>
-          Sign Out
-        </div>
-      ) : (
-        <div className="sign-in" onClick={signIn}>
-          Sign In
-        </div>
-      )}
-    </>
+    <BrowserRouter>
+      <nav>
+        <div onClick={createPost}>Create post</div>
+        {isUserSignedIn ? (
+          <div className="sign-out" onClick={signOutUser}>
+            Sign Out
+          </div>
+        ) : (
+          <div className="sign-in" onClick={signIn}>
+            Sign In
+          </div>
+        )}
+      </nav>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
