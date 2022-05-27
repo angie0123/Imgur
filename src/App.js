@@ -8,8 +8,9 @@ import {
   signOut,
 } from 'firebase/auth';
 import { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
+import NewPost from './pages/NewPost';
 const firebaseConfig = {
   apiKey: 'AIzaSyC9IYgw2O6Uyj_B_beQCloRf8NgZmc0hss',
   authDomain: 'imgur-75071.firebaseapp.com',
@@ -52,7 +53,9 @@ function App() {
   return (
     <BrowserRouter>
       <nav>
-        <div onClick={createPost}>Create post</div>
+        <Link to="/upload" onClick={createPost}>
+          Create post
+        </Link>
         {isUserSignedIn ? (
           <div className="sign-out" onClick={signOutUser}>
             Sign Out
@@ -65,6 +68,7 @@ function App() {
       </nav>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/upload" element={<NewPost />} />
       </Routes>
     </BrowserRouter>
   );
