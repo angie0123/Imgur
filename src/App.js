@@ -1,5 +1,12 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, collection, addDoc } from 'firebase/firestore';
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  where,
+  query,
+  getDocs,
+} from 'firebase/firestore';
 import {
   getAuth,
   onAuthStateChanged,
@@ -11,6 +18,9 @@ import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import NewPost from './pages/NewPost';
+import User from './pages/User';
+import Register from './pages/Register';
+
 const firebaseConfig = {
   apiKey: 'AIzaSyC9IYgw2O6Uyj_B_beQCloRf8NgZmc0hss',
   authDomain: 'imgur-75071.firebaseapp.com',
@@ -23,43 +33,72 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 
 function App() {
-  const [isUserSignedIn, setIsUserSignedIn] = useState(false);
+  const [user, setUser] = useState(null);
+
   const signIn = async () => {
     var provider = new GoogleAuthProvider();
     await signInWithPopup(getAuth(), provider);
-  };
-
-  const createPost = async () => {
-    const db = getFirestore();
-    const docRef = await addDoc(collection(db, 'posts'), {
-      title: 'Testing Title',
-      description: 'Testing Description',
-    });
-    console.log('Written document with ID', docRef.id);
   };
 
   const signOutUser = () => {
     signOut(getAuth());
   };
 
-  const authStateObserver = (user) => {
-    setIsUserSignedIn(user ? true : false);
+  // associate user info with auth user
+  const authStateObserver = async (user) => {
+    console.log('state changed');
+    if (user) {
+      const userdata = await fetchUserData(user.email);
+      // setUser(userdata);
+    } else {
+      setUser(null);
+    }
   };
+
+  console.log('re-rendered');
+
+  const fetchUserData = async (email) => {
+    const q = query(
+      collection(getFirestore(), 'users'),
+      where('email', '==', email)
+    );
+    const querySnapshot = await getDocs(q);
+    let data;
+    querySnapshot.forEach((doc) => {
+      data = doc.data();
+    });
+    return data;
+  };
+
   const initFirebaseAuth = () => {
     onAuthStateChanged(getAuth(), authStateObserver);
   };
   initFirebaseAuth();
 
+  const registerSubmitHandler = async (event, userNameInput) => {
+    event.preventDefault();
+    const newUser = {
+      name: userNameInput,
+      email: getAuth().currentUser.email,
+      profilePic: getAuth().currentUser.photoURL,
+    };
+    await addDoc(collection(getFirestore(), 'users'), newUser);
+    console.log('new user', newUser);
+    setUser(newUser);
+  };
+
   return (
     <BrowserRouter>
       <nav>
-        <Link to="/upload" onClick={createPost}>
-          Create post
-        </Link>
-        {isUserSignedIn ? (
-          <div className="sign-out" onClick={signOutUser}>
-            Sign Out
-          </div>
+        <Link to="/upload">Create post</Link>
+        {user ? (
+          <>
+            <div>{user.name}</div>
+            <div>{user.photoURL}</div>
+            <div className="sign-out" onClick={signOutUser}>
+              Sign Out
+            </div>
+          </>
         ) : (
           <div className="sign-in" onClick={signIn}>
             Sign In
@@ -69,9 +108,23 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/upload" element={<NewPost />} />
+        <Route path="/user/:name" element={<User />} />
+        <Route
+          path="/register"
+          element={<Register registerSubmitHandler={registerSubmitHandler} />}
+        />
       </Routes>
     </BrowserRouter>
   );
 }
 
 export default App;
+
+// const createPost = async () => {
+//   const db = getFirestore();
+//   const docRef = await addDoc(collection(db, 'posts'), {
+//     title: 'Testing Title',
+//     description: 'Testing Description',
+//   });
+//   console.log('Written document with ID', docRef.id);
+// };
