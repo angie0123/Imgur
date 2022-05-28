@@ -14,26 +14,58 @@ import {
   signInWithPopup,
   signOut,
 } from 'firebase/auth';
-import { useState } from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import Home from './pages/Home';
 import NewPost from './pages/NewPost';
 import User from './pages/User';
 import Register from './pages/Register';
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyC9IYgw2O6Uyj_B_beQCloRf8NgZmc0hss',
-  authDomain: 'imgur-75071.firebaseapp.com',
-  projectId: 'imgur-75071',
-  storageBucket: 'imgur-75071.appspot.com',
-  messagingSenderId: '985443297553',
-  appId: '1:985443297553:web:17c350e2c15f014cb984b0',
-};
-
-initializeApp(firebaseConfig);
-
 function App() {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const initFirebaseAuth = () => {
+      onAuthStateChanged(getAuth(), authStateObserver);
+    };
+    // associate user info with auth user
+    const authStateObserver = async (user) => {
+      console.log(user);
+      if (user) {
+        const userdata = await fetchUserData(user.email);
+        if (userdata) {
+          setUser(userdata);
+        } else {
+          navigate('/register');
+        }
+      } else {
+        setUser(null);
+      }
+    };
+    const fetchUserData = async (email) => {
+      const q = query(
+        collection(getFirestore(), 'users'),
+        where('email', '==', email)
+      );
+      const querySnapshot = await getDocs(q);
+      let data;
+      querySnapshot.forEach((doc) => {
+        data = doc.data();
+      });
+      return data;
+    };
+    const firebaseConfig = {
+      apiKey: 'AIzaSyC9IYgw2O6Uyj_B_beQCloRf8NgZmc0hss',
+      authDomain: 'imgur-75071.firebaseapp.com',
+      projectId: 'imgur-75071',
+      storageBucket: 'imgur-75071.appspot.com',
+      messagingSenderId: '985443297553',
+      appId: '1:985443297553:web:17c350e2c15f014cb984b0',
+    };
+    initializeApp(firebaseConfig);
+    initFirebaseAuth();
+  }, [navigate]);
 
   const signIn = async () => {
     var provider = new GoogleAuthProvider();
@@ -44,37 +76,6 @@ function App() {
     signOut(getAuth());
   };
 
-  // associate user info with auth user
-  const authStateObserver = async (user) => {
-    console.log('state changed');
-    if (user) {
-      const userdata = await fetchUserData(user.email);
-      // setUser(userdata);
-    } else {
-      setUser(null);
-    }
-  };
-
-  console.log('re-rendered');
-
-  const fetchUserData = async (email) => {
-    const q = query(
-      collection(getFirestore(), 'users'),
-      where('email', '==', email)
-    );
-    const querySnapshot = await getDocs(q);
-    let data;
-    querySnapshot.forEach((doc) => {
-      data = doc.data();
-    });
-    return data;
-  };
-
-  const initFirebaseAuth = () => {
-    onAuthStateChanged(getAuth(), authStateObserver);
-  };
-  initFirebaseAuth();
-
   const registerSubmitHandler = async (event, userNameInput) => {
     event.preventDefault();
     const newUser = {
@@ -84,11 +85,10 @@ function App() {
     };
     await addDoc(collection(getFirestore(), 'users'), newUser);
     console.log('new user', newUser);
-    setUser(newUser);
   };
 
   return (
-    <BrowserRouter>
+    <>
       <nav>
         <Link to="/upload">Create post</Link>
         {user ? (
@@ -114,7 +114,7 @@ function App() {
           element={<Register registerSubmitHandler={registerSubmitHandler} />}
         />
       </Routes>
-    </BrowserRouter>
+    </>
   );
 }
 
