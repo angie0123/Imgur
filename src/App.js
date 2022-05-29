@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+import './styles.css';
 import {
   getFirestore,
   collection,
@@ -15,11 +16,12 @@ import {
   signOut,
 } from 'firebase/auth';
 import { useState, useEffect } from 'react';
-import { Routes, Route, Link, useNavigate } from 'react-router-dom';
-import Home from './pages/Home';
-import NewPost from './pages/NewPost';
-import User from './pages/User';
-import Register from './pages/Register';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import Home from './component/Home';
+import NewPost from './component/NewPost';
+import User from './component/User';
+import Register from './component/Register';
+import LayoutWithNav from './component/LayoutWithNav';
 
 function App() {
   const navigate = useNavigate();
@@ -31,7 +33,6 @@ function App() {
     };
     // associate user info with auth user
     const authStateObserver = async (user) => {
-      console.log(user);
       if (user) {
         const userdata = await fetchUserData(user.email);
         if (userdata) {
@@ -43,18 +44,7 @@ function App() {
         setUser(null);
       }
     };
-    const fetchUserData = async (email) => {
-      const q = query(
-        collection(getFirestore(), 'users'),
-        where('email', '==', email)
-      );
-      const querySnapshot = await getDocs(q);
-      let data;
-      querySnapshot.forEach((doc) => {
-        data = doc.data();
-      });
-      return data;
-    };
+
     const firebaseConfig = {
       apiKey: 'AIzaSyC9IYgw2O6Uyj_B_beQCloRf8NgZmc0hss',
       authDomain: 'imgur-75071.firebaseapp.com',
@@ -75,6 +65,18 @@ function App() {
   const signOutUser = () => {
     signOut(getAuth());
   };
+  const fetchUserData = async (email) => {
+    const q = query(
+      collection(getFirestore(), 'users'),
+      where('email', '==', email)
+    );
+    const querySnapshot = await getDocs(q);
+    let data;
+    querySnapshot.forEach((doc) => {
+      data = doc.data();
+    });
+    return data;
+  };
 
   const registerSubmitHandler = async (event, userNameInput) => {
     event.preventDefault();
@@ -84,31 +86,28 @@ function App() {
       profilePic: getAuth().currentUser.photoURL,
     };
     await addDoc(collection(getFirestore(), 'users'), newUser);
-    console.log('new user', newUser);
+    navigate('/');
+    const userdata = await fetchUserData(getAuth().currentUser.email);
+    setUser(userdata);
   };
 
   return (
     <>
-      <nav>
-        <Link to="/upload">Create post</Link>
-        {user ? (
-          <>
-            <div>{user.name}</div>
-            <div>{user.photoURL}</div>
-            <div className="sign-out" onClick={signOutUser}>
-              Sign Out
-            </div>
-          </>
-        ) : (
-          <div className="sign-in" onClick={signIn}>
-            Sign In
-          </div>
-        )}
-      </nav>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/upload" element={<NewPost />} />
-        <Route path="/user/:name" element={<User />} />
+        <Route
+          path="/"
+          element={
+            <LayoutWithNav
+              user={user}
+              signOutHandler={signOutUser}
+              signInHandler={signIn}
+            />
+          }
+        >
+          <Route path="/" element={<Home />} />
+          <Route path="/upload" element={<NewPost />} />
+          <Route path="/user/:name" element={<User />} />
+        </Route>
         <Route
           path="/register"
           element={<Register registerSubmitHandler={registerSubmitHandler} />}
