@@ -13,11 +13,14 @@
   align-items: center;
   justify-content: space-between;
   background-color: purple;
+  display: relative;
+  font-weight: bold;
 }
 
 .top-nav .left-container,
 .top-nav .right-container {
   display: flex;
+  align-items: center;
 }
 
 .logo {
@@ -65,6 +68,18 @@ a:active {
   min-width: 108px;
 }
 
+.user-name {
+  font-weight: bold;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.user-photo img {
+  height: 37px;
+  width: 37px;
+  border-radius: 50%;
+}
+
 .button {
   display: flex;
   align-items: center;
@@ -75,6 +90,67 @@ a:active {
   height: 35px;
 }
 
+.button:hover,
+.user-name:hover,
+.user-photo:hover,
+.sign-in:hover,
+.sign-out:hover {
+  cursor: pointer;
+}
+
 .green {
   background-color: #1bb76e;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 70px;
+  right: 8px;
+  margin-top: 10px;
+  background-color: grey;
+  display: grid;
+  z-index: 999;
+  font-size: 15px;
+  font-weight: bold;
+  width: 150px;
+  line-height: 2.1;
+  letter-spacing: 0.8px;
+  border-radius: 6px;
+  background-color: #53565d;
+  box-shadow: 0 9px 25px 0 rgb(0 0 0 /78%);
+  padding-top: 8px;
+}
+
+.dropdown-triangle {
+  top: -8px;
+  position: absolute;
+  right: 14px;
+}
+
+.dropdown-triangle .triangle {
+  fill: #53565d !important;
+  stroke: #53565d !important;
+  stroke-width: 1;
+}
+
+.dropdown-menu > * {
+  padding: 0 10px 0 21px;
+}
+
+.dropdown-option-footer {
+  background-color: #565f6e;
+  padding-top: 14px;
+  padding-bottom: 5px;
+  font-size: 14px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.sign-out {
+  display: flex;
+  align-items: center;
+}
+
+.sign-out img {
+  margin-right: 10px;
 }

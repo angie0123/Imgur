@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 
 const LayoutWithNav = ({ user, signOutHandler, signInHandler }) => {
+  const [toggleDropdown, setToggleDropdown] = useState(false);
+
   return (
     <>
       <nav className="top-nav">
@@ -10,7 +13,6 @@ const LayoutWithNav = ({ user, signOutHandler, signInHandler }) => {
               width="94"
               height="34"
               viewBox="0 0 94 34"
-              class="icon stroke fill"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -72,22 +74,47 @@ const LayoutWithNav = ({ user, signOutHandler, signInHandler }) => {
           </div>
         </div>
         <div className="search-bar">Searchbar</div>
-        {user ? (
-          <>
-            <div>{user.name}</div>
-            <div>{user.photoURL}</div>
-            <div className="sign-out" onClick={signOutHandler}>
-              Sign Out
-            </div>
-          </>
-        ) : (
-          <div className="right-container">
-            <div className="sign-in button" onClick={signInHandler}>
-              Sign In
-            </div>
-            <div className="sign-up button green">Sign Up</div>
-          </div>
-        )}
+        <div className="right-container">
+          {user ? (
+            <>
+              <div
+                className="user-name"
+                onClick={() => setToggleDropdown(!toggleDropdown)}
+              >
+                {user.name}
+              </div>
+              <div
+                className="user-photo"
+                onClick={() => setToggleDropdown(!toggleDropdown)}
+              >
+                <img src={user.profilePic} alt="profile" />
+              </div>
+              {toggleDropdown && (
+                <div className="dropdown-menu">
+                  <Link to={`/${user.name}/posts`}>Posts</Link>
+                  <Link to={`/${user.name}/favourites`}>Favourites</Link>
+                  <Link to={`/${user.name}/comments`}>Comments</Link>
+                  <div className="dropdown-option-footer">
+                    <div className="sign-out" onClick={signOutHandler}>
+                      <img
+                        src="https://s.imgur.com/desktop-assets/desktop-assets/icon-sign-out.81306534d40e7090dc1174e321e5be1b.svg"
+                        alt="sign out icon"
+                      />
+                      Sign Out
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              <div className="sign-in button" onClick={signInHandler}>
+                Sign In
+              </div>
+              <div className="sign-up button green">Sign Up</div>
+            </>
+          )}
+        </div>
       </nav>
       <Outlet />
     </>
