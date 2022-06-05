@@ -1,12 +1,12 @@
 import { useParams, Outlet } from 'react-router-dom';
 
 const UserLayout = () => {
-  const { userName } = useParams();
+  const { name } = useParams();
 
   return (
     <>
-      Hello {userName}! Welcome to user page
-      <Outlet />
+      Hello {name}! Welcome to user page
+      <Outlet context={name} />
     </>
   );
 };

@@ -1,5 +1,7 @@
+import { useOutletContext } from 'react-router-dom';
 const UserComments = () => {
-  return <>User Comments here!</>;
+  const username = useOutletContext();
+  return <>{username}'s Comments here!</>;
 };
 
 export default UserComments;

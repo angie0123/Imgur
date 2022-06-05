@@ -1,5 +1,8 @@
+import { useOutletContext } from 'react-router-dom';
+
 const UserPosts = () => {
-  return <>User posts here</>;
+  const username = useOutletContext();
+  return <>{username}'s posts here</>;
 };
 
 export default UserPosts;
