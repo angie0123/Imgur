@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const LayoutWithNav = ({ user, signOutHandler, signInHandler }) => {
+  const navigate = useNavigate();
   const [toggleDropdown, setToggleDropdown] = useState(false);
   const dropdownRef = useRef();
   const handleClickOutside = (e) => {
@@ -100,6 +102,9 @@ const LayoutWithNav = ({ user, signOutHandler, signInHandler }) => {
                 className="user-photo"
                 onClick={(event) => {
                   event.stopPropagation();
+                  if (toggleDropdown) {
+                    navigate(`/user/${user.name}`);
+                  }
                   setToggleDropdown(!toggleDropdown);
                 }}
               >
