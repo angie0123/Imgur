@@ -14,7 +14,6 @@
   justify-content: space-between;
   background-color: purple;
   display: relative;
-  font-weight: bold;
 }
 
 .top-nav .left-container,
@@ -41,7 +40,8 @@ a:active {
 }
 
 .new-post {
-  min-width: 115px;
+  min-width: 125px;
+  font-weight: bold;
 }
 
 .new-post a {
@@ -50,7 +50,7 @@ a:active {
 }
 
 .new-post a img {
-  margin-right: 18px;
+  margin-right: 10px;
   margin-top: 4px;
 }
 
@@ -111,7 +111,6 @@ a:active {
   display: grid;
   z-index: 999;
   font-size: 15px;
-  font-weight: bold;
   width: 150px;
   line-height: 2.1;
   letter-spacing: 0.8px;
@@ -119,6 +118,14 @@ a:active {
   background-color: #53565d;
   box-shadow: 0 9px 25px 0 rgb(0 0 0 /78%);
   padding-top: 8px;
+}
+
+.dropdown-menu .options {
+  display: grid;
+}
+
+.dropdown-menu .options > *:hover {
+  background-color: hsla(0, 0%, 80%, 0.29);
 }
 
 .dropdown-triangle {
@@ -131,11 +138,11 @@ a:active {
   fill: #53565d;
 }
 
-.dropdown-menu > * {
+.dropdown-menu .options > * {
   padding: 0 10px 0 21px;
 }
 
-.dropdown-option-footer {
+.dropdown-menu .dropdown-option-footer {
   background-color: #565f6e;
   padding-top: 14px;
   padding-bottom: 5px;

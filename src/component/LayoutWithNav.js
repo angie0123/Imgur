@@ -125,10 +125,12 @@ const LayoutWithNav = ({ user, signOutHandler, signInHandler }) => {
                       <path d="M10.3359 1.1094C11.3436 0.437601 12.6564 0.437601 13.6641 1.1094L24 8L3.05823e-09 8L10.3359 1.1094 Z"></path>
                     </svg>
                   </div>
-                  <Link to={`/${user.name}/posts`}>Posts</Link>
-                  <Link to={`/${user.name}/favourites`}>Favourites</Link>
-                  <Link to={`/${user.name}/comments`}>Comments</Link>
-                  <div className="dropdown-option-footer">
+                  <div className="options">
+                    <Link to={`/${user.name}/posts`}>Posts</Link>
+                    <Link to={`/${user.name}/favourites`}>Favourites</Link>
+                    <Link to={`/${user.name}/comments`}>Comments</Link>
+                  </div>
+                  <div className="dropdown-option-footer options">
                     <div className="sign-out" onClick={signOutHandler}>
                       <img
                         src="https://s.imgur.com/desktop-assets/desktop-assets/icon-sign-out.81306534d40e7090dc1174e321e5be1b.svg"
