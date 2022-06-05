@@ -12,8 +12,20 @@
   color: white;
   align-items: center;
   justify-content: space-between;
-  background-color: purple;
+  background-color: transparent;
   display: relative;
+}
+
+.top-cover {
+  padding-top: 62px;
+  position: absolute;
+  background-size: cover;
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: 320px;
+  width: 100%;
+  z-index: -1;
 }
 
 .top-nav .left-container,
@@ -56,7 +68,7 @@ a:active {
 
 .search-bar {
   width: 550px;
-  background-color: green;
+  background-color: rgba(0, 0, 0, 0.2);
   margin-right: 50px;
 }
 

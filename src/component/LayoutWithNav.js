@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import background from '../assets/images/background.jpg';
 
 const LayoutWithNav = ({ user, signOutHandler, signInHandler }) => {
   const navigate = useNavigate();
@@ -8,7 +9,6 @@ const LayoutWithNav = ({ user, signOutHandler, signInHandler }) => {
   const dropdownRef = useRef();
   const handleClickOutside = (e) => {
     if (toggleDropdown && !dropdownRef.current.contains(e.target)) {
-      console.log('clicked handleclickoutside');
       setToggleDropdown(false);
     }
   };
@@ -18,6 +18,12 @@ const LayoutWithNav = ({ user, signOutHandler, signInHandler }) => {
   });
   return (
     <>
+      <div
+        className="top-cover"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url(${background})`,
+        }}
+      ></div>
       <nav className="top-nav">
         <div className="left-container">
           <div className="logo">
