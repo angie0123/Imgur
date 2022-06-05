@@ -19,10 +19,12 @@ import { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Home from './component/Home';
 import NewPost from './component/NewPost';
-import User from './component/User';
+import UserLayout from './component/UserLayout';
 import Register from './component/Register';
 import LayoutWithNav from './component/LayoutWithNav';
-
+import UserComments from './component/UserComments';
+import UserFavourites from './component/UserFavourites';
+import UserPosts from './component/UserPosts';
 function App() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -106,7 +108,12 @@ function App() {
         >
           <Route path="/" element={<Home />} />
           <Route path="/upload" element={<NewPost />} />
-          <Route path="/user/:name" element={<User />} />
+          <Route path="/user/:name" element={<UserLayout />}>
+            <Route path="" element={<UserPosts />} />
+            <Route path="posts" element={<UserPosts />} />
+            <Route path="favourites" element={<UserFavourites />} />
+            <Route path="comments" element={<UserComments />} />
+          </Route>
         </Route>
         <Route
           path="/register"
