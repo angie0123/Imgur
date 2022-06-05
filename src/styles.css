@@ -127,10 +127,8 @@ a:active {
   right: 14px;
 }
 
-.dropdown-triangle .triangle {
-  fill: #53565d !important;
-  stroke: #53565d !important;
-  stroke-width: 1;
+.dropdown-triangle path {
+  fill: #53565d;
 }
 
 .dropdown-menu > * {

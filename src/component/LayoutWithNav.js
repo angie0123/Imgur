@@ -91,6 +91,19 @@ const LayoutWithNav = ({ user, signOutHandler, signInHandler }) => {
               </div>
               {toggleDropdown && (
                 <div className="dropdown-menu">
+                  <div>
+                    {' '}
+                    <svg
+                      width="24"
+                      height="8"
+                      viewBox="0 0 24 8"
+                      class="dropdown-triangle"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <title>icon</title>
+                      <path d="M10.3359 1.1094C11.3436 0.437601 12.6564 0.437601 13.6641 1.1094L24 8L3.05823e-09 8L10.3359 1.1094 Z"></path>
+                    </svg>
+                  </div>
                   <Link to={`/${user.name}/posts`}>Posts</Link>
                   <Link to={`/${user.name}/favourites`}>Favourites</Link>
                   <Link to={`/${user.name}/comments`}>Comments</Link>
