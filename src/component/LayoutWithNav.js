@@ -1,9 +1,19 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 
 const LayoutWithNav = ({ user, signOutHandler, signInHandler }) => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
-
+  const dropdownRef = useRef();
+  const handleClickOutside = (e) => {
+    if (toggleDropdown && !dropdownRef.current.contains(e.target)) {
+      console.log('clicked handleclickoutside');
+      setToggleDropdown(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  });
   return (
     <>
       <nav className="top-nav">
@@ -79,18 +89,24 @@ const LayoutWithNav = ({ user, signOutHandler, signInHandler }) => {
             <>
               <div
                 className="user-name"
-                onClick={() => setToggleDropdown(!toggleDropdown)}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setToggleDropdown(!toggleDropdown);
+                }}
               >
                 {user.name}
               </div>
               <div
                 className="user-photo"
-                onClick={() => setToggleDropdown(!toggleDropdown)}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setToggleDropdown(!toggleDropdown);
+                }}
               >
                 <img src={user.profilePic} alt="profile" />
               </div>
               {toggleDropdown && (
-                <div className="dropdown-menu">
+                <div ref={dropdownRef} className="dropdown-menu">
                   <div>
                     {' '}
                     <svg
