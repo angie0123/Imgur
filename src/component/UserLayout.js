@@ -1,4 +1,4 @@
-import { useParams, Outlet } from 'react-router-dom';
+import { useParams, Outlet, Link } from 'react-router-dom';
 import {
   query,
   collection,
@@ -36,6 +36,19 @@ const UserLayout = () => {
               <img src={user.profilePic} alt={`${user.name} profile`} />
               <div className="profile-name">{user.name}</div>
             </div>
+            <nav className="profile-tabs">
+              <ul>
+                <li>
+                  <Link to={`/user/${user.name}/posts`}>Posts</Link>
+                </li>
+                <li>
+                  <Link to={`/user/${user.name}/comments`}>Comments</Link>
+                </li>
+                <li>
+                  <Link to={`/user/${user.name}/favourites`}>Favourites</Link>
+                </li>
+              </ul>
+            </nav>
           </div>
           <Outlet context={name} />
         </>

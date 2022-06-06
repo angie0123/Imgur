@@ -36,7 +36,6 @@
 
 .logo {
   font-size: 28px;
-  color: blue;
   font-weight: 900;
   width: 95px;
   justify-self: start;
@@ -170,4 +169,52 @@ a:active {
 
 .sign-out img {
   margin-right: 10px;
+}
+
+/* PROFILE SECTION */
+
+.profile-header {
+  width: min(1264px, 90%);
+  margin: 0 auto;
+  padding-top: 52px;
+  height: 258px;
+}
+
+.profile-header .profile-container {
+  display: flex;
+  align-items: center;
+}
+
+.profile-header .profile-container img {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+}
+
+.profile-header .profile-container .profile-name {
+  margin: 28px 24px;
+  font-size: 44px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: #f2f2f2;
+  font-weight: bold;
+}
+
+.profile-header .profile-tabs {
+  margin-top: 30px;
+  width: 400px;
+  margin: 30px auto 0 auto;
+}
+
+.profile-header .profile-tabs ul {
+  display: flex;
+  list-style: none;
+}
+
+.profile-header .profile-tabs ul li {
+  padding: 8px;
+  text-transform: uppercase;
+  color: white;
+  text-align: center;
+  margin: auto 7px;
 }
