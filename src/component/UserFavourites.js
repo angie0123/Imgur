@@ -1,4 +1,4 @@
-import { useOutletContext } from 'react';
+import { useOutletContext } from 'react-router-dom';
 
 const UserFavourites = () => {
   const username = useOutletContext();
