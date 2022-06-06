@@ -25,6 +25,7 @@ import LayoutWithNav from './component/LayoutWithNav';
 import UserComments from './component/UserComments';
 import UserFavourites from './component/UserFavourites';
 import UserPosts from './component/UserPosts';
+import EditPost from './component/EditPost';
 function App() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -107,7 +108,6 @@ function App() {
           }
         >
           <Route path="/" element={<Home />} />
-          <Route path="/upload" element={<NewPost />} />
           <Route path="/user/:name" element={<UserLayout />}>
             <Route path="" element={<UserPosts />} />
             <Route path="posts" element={<UserPosts />} />
@@ -115,6 +115,8 @@ function App() {
             <Route path="comments" element={<UserComments />} />
           </Route>
         </Route>
+        <Route path="/upload" element={<NewPost />} />
+        <Route path="upload/:id" element={<EditPost />} />
         <Route
           path="/register"
           element={<Register registerSubmitHandler={registerSubmitHandler} />}
