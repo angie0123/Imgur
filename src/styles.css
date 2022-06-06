@@ -3,6 +3,8 @@
   margin: 0;
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif;
+  --nav-height: 71px;
+  --header-height: 268px;
 }
 
 .top-nav {
@@ -23,9 +25,10 @@
   top: 0;
   left: 0;
   right: 0;
-  min-height: 320px;
+  min-height: calc(var(--nav-height) + var(--header-height));
   width: 100%;
   z-index: -1;
+  background-position-y: top;
 }
 
 .top-nav .left-container,
@@ -174,10 +177,10 @@ a:active {
 /* PROFILE SECTION */
 
 .profile-header {
-  width: min(1264px, 90%);
+  width: min(1520px, 90%);
   margin: 0 auto;
   padding-top: 52px;
-  height: 258px;
+  height: var(--header-height);
 }
 
 .profile-header .profile-container {
@@ -201,7 +204,6 @@ a:active {
 }
 
 .profile-header .profile-tabs {
-  margin-top: 30px;
   width: 400px;
   margin: 30px auto 0 auto;
 }
