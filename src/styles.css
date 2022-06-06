@@ -213,10 +213,22 @@ a:active {
   list-style: none;
 }
 
-.profile-header .profile-tabs ul li {
+.profile-header .profile-tabs ul li a {
   padding: 8px;
   text-transform: uppercase;
   color: white;
   text-align: center;
   margin: auto 7px;
+}
+
+.profile-header .profile-tabs ul li a.active {
+  font-weight: bold;
+}
+.profile-header .profile-tabs ul li a.active::after {
+  content: '';
+  display: block;
+  width: calc(100% - 4px);
+  margin-top: 9px;
+  border: 2px solid #fff;
+  border-radius: 2px;
 }

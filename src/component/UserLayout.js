@@ -9,6 +9,7 @@ import {
 import { useEffect, useState } from 'react';
 const UserLayout = () => {
   const { name } = useParams();
+  const [isActive, setIsActive] = useState('posts');
   const [user, setUser] = useState(null);
   useEffect(() => {
     const fetchUserData = async (username) => {
@@ -27,6 +28,9 @@ const UserLayout = () => {
       setUser(data);
     });
   }, [name]);
+  const handleLinkClick = (e) => {
+    setIsActive(e.target.id);
+  };
   return (
     <>
       {user && (
@@ -39,13 +43,34 @@ const UserLayout = () => {
             <nav className="profile-tabs">
               <ul>
                 <li>
-                  <Link to={`/user/${user.name}/posts`}>Posts</Link>
+                  <Link
+                    id="postsLink"
+                    className={isActive === 'postsLink' ? 'active' : ''}
+                    onClick={handleLinkClick}
+                    to={`/user/${user.name}/posts`}
+                  >
+                    Posts
+                  </Link>
                 </li>
                 <li>
-                  <Link to={`/user/${user.name}/comments`}>Comments</Link>
+                  <Link
+                    id="commentsLink"
+                    className={isActive === 'commentsLink' ? 'active' : ''}
+                    onClick={handleLinkClick}
+                    to={`/user/${user.name}/comments`}
+                  >
+                    Comments
+                  </Link>
                 </li>
                 <li>
-                  <Link to={`/user/${user.name}/favourites`}>Favourites</Link>
+                  <Link
+                    id="favouritesLink"
+                    className={isActive === 'favouritesLink' ? 'active' : ''}
+                    onClick={handleLinkClick}
+                    to={`/user/${user.name}/favourites`}
+                  >
+                    Favourites
+                  </Link>
                 </li>
               </ul>
             </nav>
