@@ -115,7 +115,10 @@ function App() {
             <Route path="comments" element={<UserComments />} />
           </Route>
         </Route>
-        <Route path="/upload" element={<NewPost />} />
+        <Route
+          path="/upload"
+          element={<NewPost user={user} signInHandler={signIn} />}
+        />
         <Route path="upload/:id" element={<EditPost />} />
         <Route
           path="/register"
