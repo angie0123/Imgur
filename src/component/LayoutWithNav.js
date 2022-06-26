@@ -132,9 +132,33 @@ const LayoutWithNav = ({ user, signOutHandler, signInHandler }) => {
                     </svg>
                   </div>
                   <div className="options">
-                    <Link to={`/user/${user.name}/posts`}>Posts</Link>
-                    <Link to={`/user/${user.name}/favourites`}>Favourites</Link>
-                    <Link to={`/user/${user.name}/comments`}>Comments</Link>
+                    <Link
+                      to={`/user/${user.name}/posts`}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        setToggleDropdown(!toggleDropdown);
+                      }}
+                    >
+                      Posts
+                    </Link>
+                    <Link
+                      to={`/user/${user.name}/favourites`}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        setToggleDropdown(!toggleDropdown);
+                      }}
+                    >
+                      Favourites
+                    </Link>
+                    <Link
+                      to={`/user/${user.name}/comments`}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        setToggleDropdown(!toggleDropdown);
+                      }}
+                    >
+                      Comments
+                    </Link>
                   </div>
                   <div className="dropdown-option-footer options">
                     <div className="sign-out" onClick={signOutHandler}>
