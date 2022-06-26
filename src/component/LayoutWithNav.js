@@ -26,7 +26,12 @@ const LayoutWithNav = ({ user, signOutHandler, signInHandler }) => {
       ></div>
       <nav className="top-nav">
         <div className="left-container">
-          <div className="logo">
+          <div
+            className="logo"
+            onClick={() => {
+              navigate('/');
+            }}
+          >
             <svg
               width="94"
               height="34"
