@@ -49,13 +49,14 @@ function App() {
     };
 
     const firebaseConfig = {
-      apiKey: 'AIzaSyC9IYgw2O6Uyj_B_beQCloRf8NgZmc0hss',
-      authDomain: 'imgur-75071.firebaseapp.com',
-      projectId: 'imgur-75071',
-      storageBucket: 'imgur-75071.appspot.com',
-      messagingSenderId: '985443297553',
-      appId: '1:985443297553:web:17c350e2c15f014cb984b0',
+      apiKey: 'AIzaSyDy9hiNU6LsT1aSiavUnJ1S_L-OZB4-5JY',
+      authDomain: 'imgur-3d855.firebaseapp.com',
+      projectId: 'imgur-3d855',
+      storageBucket: 'imgur-3d855.appspot.com',
+      messagingSenderId: '906974734656',
+      appId: '1:906974734656:web:49df2c0734fd79218872a5',
     };
+
     initializeApp(firebaseConfig);
     initFirebaseAuth();
   }, [navigate]);
