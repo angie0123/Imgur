@@ -1,4 +1,4 @@
-import { useParams, Outlet, Link } from 'react-router-dom';
+import { useParams, Outlet, Link, useLocation } from 'react-router-dom';
 import {
   query,
   collection,
@@ -9,8 +9,8 @@ import {
 import { useEffect, useState } from 'react';
 const UserLayout = () => {
   const { name } = useParams();
-  const [isActive, setIsActive] = useState('posts');
   const [user, setUser] = useState(null);
+  const lastParam = useLocation().pathname.split('/').pop();
   useEffect(() => {
     const fetchUserData = async (username) => {
       const q = query(
@@ -28,9 +28,6 @@ const UserLayout = () => {
       setUser(data);
     });
   }, [name]);
-  const handleLinkClick = (e) => {
-    setIsActive(e.target.id);
-  };
   return (
     <>
       {user && (
@@ -45,8 +42,9 @@ const UserLayout = () => {
                 <li>
                   <Link
                     id="postsLink"
-                    className={isActive === 'postsLink' ? 'active' : ''}
-                    onClick={handleLinkClick}
+                    className={
+                      lastParam === 'posts' || lastParam === '' ? 'active' : ''
+                    }
                     to={`/user/${user.name}/posts`}
                   >
                     Posts
@@ -55,8 +53,7 @@ const UserLayout = () => {
                 <li>
                   <Link
                     id="commentsLink"
-                    className={isActive === 'commentsLink' ? 'active' : ''}
-                    onClick={handleLinkClick}
+                    className={lastParam === 'comments' ? 'active' : ''}
                     to={`/user/${user.name}/comments`}
                   >
                     Comments
@@ -65,8 +62,7 @@ const UserLayout = () => {
                 <li>
                   <Link
                     id="favouritesLink"
-                    className={isActive === 'favouritesLink' ? 'active' : ''}
-                    onClick={handleLinkClick}
+                    className={lastParam === 'favourites' ? 'active' : ''}
                     to={`/user/${user.name}/favourites`}
                   >
                     Favourites
